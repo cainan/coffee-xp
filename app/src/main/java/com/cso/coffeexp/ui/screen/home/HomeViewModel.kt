@@ -1,4 +1,4 @@
-package com.cso.coffeexp.ui.screen.coffee
+package com.cso.coffeexp.ui.screen.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,15 +7,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class CoffeeViewModel(
+class HomeViewModel(
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(CoffeeUIState())
+    private val _uiState = MutableStateFlow(HomeUIState())
     val uiState = _uiState.asStateFlow()
 
-    fun onEvent(event: CoffeeEvent) {
+    fun onEvent(event: HomeEvent) {
         when (event) {
-            CoffeeEvent.OnInit -> getHomeContent()
+            HomeEvent.OnInit -> getHomeContent()
         }
     }
 

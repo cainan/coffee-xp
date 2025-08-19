@@ -1,8 +1,8 @@
-package com.cso.coffeexp.ui.screen.coffee
+package com.cso.coffeexp.ui.screen.home
 
 import com.cso.coffeexp.data.Coffee
 
-data class CoffeeUIState(
+data class HomeUIState(
     val isLoading: Boolean = false,
     val coffeeList: List<Coffee>? = null,
 )

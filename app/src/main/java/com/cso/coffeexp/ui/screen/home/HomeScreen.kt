@@ -1,4 +1,4 @@
-package com.cso.coffeexp.ui.screen.coffee
+package com.cso.coffeexp.ui.screen.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,7 +30,7 @@ import com.cso.coffeexp.ui.theme.CoffeeXpTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CoffeeScreen(modifier: Modifier = Modifier, coffeeList: List<Coffee> = emptyList()) {
+fun HomeScreen(modifier: Modifier = Modifier, coffeeList: List<Coffee> = emptyList()) {
     // This would typically come from a ViewModel
     var coffeeList by remember { mutableStateOf(coffeeList) }
 
@@ -78,18 +78,18 @@ fun CoffeeScreen(modifier: Modifier = Modifier, coffeeList: List<Coffee> = empty
 
 @Preview(showBackground = true)
 @Composable
-fun CoffeeScreenPreview() {
+fun HomeScreenPreview() {
     CoffeeXpTheme {
-        CoffeeScreen()
+        HomeScreen()
     }
 }
 
 @Preview(showBackground = true, name = "Coffee Screen Empty")
 @Composable
-fun CoffeeScreenEmptyPreview() {
+fun HomeScreenEmptyPreview() {
     CoffeeXpTheme {
         // Simulate an empty list for this preview
-        CoffeeScreen(
+        HomeScreen(
             modifier = Modifier,
             coffeeList = getSampleCoffeeData()
         )
