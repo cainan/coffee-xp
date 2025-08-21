@@ -1,5 +1,8 @@
 package com.cso.coffeexp.data
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Coffee(
     val id: String = java.util.UUID.randomUUID().toString(), // Unique ID
     val name: String = "",

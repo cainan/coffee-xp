@@ -1,6 +1,7 @@
 package com.cso.coffeexp.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -26,11 +27,18 @@ import com.cso.coffeexp.R
 import com.cso.coffeexp.data.Coffee
 
 @Composable
-fun CoffeeCard(coffee: Coffee, modifier: Modifier = Modifier) {
+fun CoffeeCard(
+    modifier: Modifier = Modifier,
+    coffee: Coffee,
+    onClick: (Coffee) -> Unit = {},
+) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(IntrinsicSize.Min), // Ensures card wraps content or image height
+            .height(IntrinsicSize.Min)
+            .clickable {
+                onClick(coffee)
+            }, // Ensures card wraps content or image height
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row(

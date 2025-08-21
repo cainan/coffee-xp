@@ -44,15 +44,15 @@ import com.cso.coffeexp.ui.theme.CoffeeXpTheme
 @Composable
 fun DetailsScreen(
     modifier: Modifier = Modifier,
-    state: DetailsUIState,
-    onNavigateUp: () -> Unit, // For back navigation
+    uiState: DetailsUIState,
+    onBackPressed: () -> Unit, // For back navigation
     onSaveCoffee: (Coffee) -> Unit,
 ) {
-    var coffeeName = state.coffee.name
-    var coffeeMethod = state.coffee.method
-    var coffeeGrade = state.coffee.grade.toString()
-    var coffeeNotes = state.coffee.notes
-    var selectedImageUri = state.coffee.imageUrl
+    var coffeeName = uiState.coffee.name
+    var coffeeMethod = uiState.coffee.method
+    var coffeeGrade = uiState.coffee.grade.toString()
+    var coffeeNotes = uiState.coffee.notes
+    var selectedImageUri = uiState.coffee.imageUrl
 
     val context = LocalContext.current
 
@@ -62,7 +62,7 @@ fun DetailsScreen(
             TopAppBar(
                 title = { Text("Add New Coffee") },
                 navigationIcon = {
-                    IconButton(onClick = onNavigateUp) {
+                    IconButton(onClick = onBackPressed) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
@@ -180,7 +180,7 @@ fun DetailsScreen(
 fun AddCoffeeScreenPreview() {
     CoffeeXpTheme {
         DetailsScreen(
-            state = DetailsUIState(
+            uiState = DetailsUIState(
                 isLoading = false,
                 coffee = Coffee(
                     name = "Ethiopian Yirgacheffe",
@@ -189,7 +189,7 @@ fun AddCoffeeScreenPreview() {
                     notes = "Bright acidity, floral notes, hints of citrus and berries."
                 )
             ),
-            onNavigateUp = {},
+            onBackPressed = {},
             onSaveCoffee = {}
         )
     }

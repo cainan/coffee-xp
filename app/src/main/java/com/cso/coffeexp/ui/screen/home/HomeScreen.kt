@@ -15,10 +15,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,28 +26,24 @@ import com.cso.coffeexp.ui.theme.CoffeeXpTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, coffeeList: List<Coffee> = emptyList()) {
-    // This would typically come from a ViewModel
-    var coffeeList by remember { mutableStateOf(coffeeList) }
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    uiState: HomeUIState,
+    onNavigateToDetails: (Coffee) -> Unit,
+) {
+    val coffeeList = uiState.coffeeList
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                // TODO: Implement navigation to an "Add Coffee" screen or show a dialog
-                // For now, let's add a sample coffee
-                val newCoffee = Coffee(
-                    name = "New Roast ${coffeeList.size + 1}",
-                    method = "Pour Over",
-                    grade = 4.5f
-                )
-                coffeeList = coffeeList + newCoffee
+                TODO()
             }) {
                 Icon(Icons.Filled.Add, contentDescription = "Add new coffee")
             }
         }
     ) { innerPadding ->
-        if (coffeeList.isEmpty()) {
+        if (coffeeList.isNullOrEmpty()) {
             Box(
                 modifier = Modifier
                     .padding(innerPadding)
@@ -69,7 +61,9 @@ fun HomeScreen(modifier: Modifier = Modifier, coffeeList: List<Coffee> = emptyLi
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(coffeeList, key = { it.id }) { coffee ->
-                    CoffeeCard(coffee = coffee)
+                    CoffeeCard(coffee = coffee, onClick = { coffee ->
+                        onNavigateToDetails(coffee)
+                    })
                 }
             }
         }
@@ -80,7 +74,10 @@ fun HomeScreen(modifier: Modifier = Modifier, coffeeList: List<Coffee> = emptyLi
 @Composable
 fun HomeScreenPreview() {
     CoffeeXpTheme {
-        HomeScreen()
+        HomeScreen(
+            uiState = HomeUIState(coffeeList = getSampleCoffeeData()),
+            onNavigateToDetails = {},
+        )
     }
 }
 
@@ -90,8 +87,8 @@ fun HomeScreenEmptyPreview() {
     CoffeeXpTheme {
         // Simulate an empty list for this preview
         HomeScreen(
-            modifier = Modifier,
-            coffeeList = getSampleCoffeeData()
+            uiState = HomeUIState(),
+            onNavigateToDetails = {}
         )
     }
 }
