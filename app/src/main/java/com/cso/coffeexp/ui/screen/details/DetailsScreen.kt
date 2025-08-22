@@ -29,6 +29,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,9 +46,17 @@ import com.cso.coffeexp.ui.theme.CoffeeXpTheme
 fun DetailsScreen(
     modifier: Modifier = Modifier,
     uiState: DetailsUIState,
-    onBackPressed: () -> Unit, // For back navigation
-    onSaveCoffee: (Coffee) -> Unit,
+    coffeeId: String? = null,
+    onEvent: (DetailsEvent) -> Unit = {},
+    onBackPressed: () -> Unit = {},
 ) {
+
+    coffeeId?.let {
+        LaunchedEffect(Unit) {
+            onEvent(DetailsEvent.FindCoffeeById(coffeeId))
+        }
+    }
+
     var coffeeName = uiState.coffee.name
     var coffeeMethod = uiState.coffee.method
     var coffeeGrade = uiState.coffee.grade.toString()
@@ -158,13 +167,7 @@ fun DetailsScreen(
             // --- Save Button ---
             Button(
                 onClick = {
-                    val grade = coffeeGrade.toFloatOrNull() ?: 0f // Handle invalid input
-                    val newCoffee = Coffee(
-                        name = coffeeName,
-                        method = coffeeMethod,
-                        grade = grade,
-                    )
-                    onSaveCoffee(newCoffee)
+                    TODO("Save coffee")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -189,8 +192,6 @@ fun AddCoffeeScreenPreview() {
                     notes = "Bright acidity, floral notes, hints of citrus and berries."
                 )
             ),
-            onBackPressed = {},
-            onSaveCoffee = {}
         )
     }
 }

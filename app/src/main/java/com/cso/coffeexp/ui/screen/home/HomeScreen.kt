@@ -15,6 +15,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,8 +29,13 @@ import com.cso.coffeexp.ui.theme.CoffeeXpTheme
 fun HomeScreen(
     modifier: Modifier = Modifier,
     uiState: HomeUIState,
-    onNavigateToDetails: (String) -> Unit,
+    onEvent: (HomeEvent) -> Unit = {},
+    onNavigateToDetails: (String) -> Unit = {},
 ) {
+    LaunchedEffect(Unit) {
+        onEvent(HomeEvent.OnInit)
+    }
+
     val coffeeList = uiState.coffeeList
 
     Scaffold(
@@ -75,7 +81,6 @@ fun HomeScreenPreview() {
     CoffeeXpTheme {
         HomeScreen(
             uiState = HomeUIState(coffeeList = mockCoffeeData),
-            onNavigateToDetails = {},
         )
     }
 }
@@ -87,7 +92,6 @@ fun HomeScreenEmptyPreview() {
         // Simulate an empty list for this preview
         HomeScreen(
             uiState = HomeUIState(),
-            onNavigateToDetails = {}
         )
     }
 }

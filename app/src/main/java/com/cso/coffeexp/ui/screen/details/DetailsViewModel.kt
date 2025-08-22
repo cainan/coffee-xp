@@ -3,6 +3,7 @@ package com.cso.coffeexp.ui.screen.details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cso.coffeexp.data.Coffee
+import com.cso.coffeexp.ui.mock.mockCoffeeData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -16,16 +17,23 @@ class DetailsViewModel(
 
     fun onEvent(event: DetailsEvent) {
         when (event) {
-            DetailsEvent.OnInit -> getHomeContent()
+            is DetailsEvent.FindCoffeeById -> findCoffeeById(event.coffeeId)
         }
     }
 
-    private fun getHomeContent() {
+    private fun findCoffeeById(id: String) {
         viewModelScope.launch {
             _uiState.update {
                 it.copy(isLoading = true)
             }
 
+            _uiState.update {
+                it.copy(
+                    isLoading = false,
+                    coffee = mockCoffeeData.firstOrNull { coffee -> coffee.id == id } ?: Coffee())
+            }
         }
     }
+
+
 }
