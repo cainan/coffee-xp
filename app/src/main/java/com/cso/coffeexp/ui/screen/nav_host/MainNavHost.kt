@@ -7,7 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.cso.coffeexp.ui.mock.getSampleCoffeeData
+import com.cso.coffeexp.ui.mock.mockCoffeeData
 import com.cso.coffeexp.ui.screen.details.DetailsScreen
 import com.cso.coffeexp.ui.screen.details.DetailsUIState
 import com.cso.coffeexp.ui.screen.home.HomeScreen
@@ -25,26 +25,28 @@ fun MainNavHost(modifier: Modifier = Modifier) {
         composable<UIRoute.Home> {
             HomeScreen(
                 modifier = Modifier,
-                uiState = HomeUIState(coffeeList = getSampleCoffeeData()),
-                onNavigateToDetails = { coffee ->
-                    Log.d(TAG, "Coffee: $coffee")
-                    navController.navigate(UIRoute.Details("coffee"))
+                uiState = HomeUIState(coffeeList = mockCoffeeData),
+                onNavigateToDetails = { coffeeId ->
+                    Log.d(TAG, "HomeScreen - CoffeeId: $coffeeId")
+                    navController.navigate(UIRoute.Details(coffeeId))
                 }
             )
         }
 
         composable<UIRoute.Details> { navBackStackEntry ->
 //            val coffee: Coffee = navBackStackEntry.toRoute()
-//            val coffeeId = navBackStackEntry.arguments?.getString(UIArgument.COFFEE.key)
-//            Log.d(TAG, "Coffee ID: $coffeeId")
-            val coffee = getSampleCoffeeData()[0]
-
-            DetailsScreen(
-                modifier = Modifier,
-                uiState = DetailsUIState(coffee = coffee),
-                onBackPressed = { navController.popBackStack() },
-                onSaveCoffee = { TODO() }
-            )
+            val coffeeId = navBackStackEntry.arguments?.getString(UIArgument.COFFEE_ID.key)
+            Log.d(TAG, "DetailsScreen - Coffee ID: $coffeeId")
+            mockCoffeeData.firstOrNull {
+                it.id == coffeeId
+            }?.let { coffee ->
+                DetailsScreen(
+                    modifier = Modifier,
+                    uiState = DetailsUIState(coffee = coffee),
+                    onBackPressed = { navController.popBackStack() },
+                    onSaveCoffee = { TODO() }
+                )
+            }
         }
     }
 }

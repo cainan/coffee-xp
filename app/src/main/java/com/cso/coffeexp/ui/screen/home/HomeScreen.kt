@@ -19,9 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.cso.coffeexp.data.Coffee
 import com.cso.coffeexp.ui.components.CoffeeCard
-import com.cso.coffeexp.ui.mock.getSampleCoffeeData
+import com.cso.coffeexp.ui.mock.mockCoffeeData
 import com.cso.coffeexp.ui.theme.CoffeeXpTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,7 +28,7 @@ import com.cso.coffeexp.ui.theme.CoffeeXpTheme
 fun HomeScreen(
     modifier: Modifier = Modifier,
     uiState: HomeUIState,
-    onNavigateToDetails: (Coffee) -> Unit,
+    onNavigateToDetails: (String) -> Unit,
 ) {
     val coffeeList = uiState.coffeeList
 
@@ -62,7 +61,7 @@ fun HomeScreen(
             ) {
                 items(coffeeList, key = { it.id }) { coffee ->
                     CoffeeCard(coffee = coffee, onClick = { coffee ->
-                        onNavigateToDetails(coffee)
+                        onNavigateToDetails(coffee.id)
                     })
                 }
             }
@@ -75,7 +74,7 @@ fun HomeScreen(
 fun HomeScreenPreview() {
     CoffeeXpTheme {
         HomeScreen(
-            uiState = HomeUIState(coffeeList = getSampleCoffeeData()),
+            uiState = HomeUIState(coffeeList = mockCoffeeData),
             onNavigateToDetails = {},
         )
     }
