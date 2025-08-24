@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cso.coffeexp.R
-import com.cso.coffeexp.data.Coffee
+import com.cso.coffeexp.domain.model.Coffee
 
 @Composable
 fun CoffeeCard(

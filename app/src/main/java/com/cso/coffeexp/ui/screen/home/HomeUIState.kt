@@ -1,6 +1,6 @@
 package com.cso.coffeexp.ui.screen.home
 
-import com.cso.coffeexp.data.Coffee
+import com.cso.coffeexp.domain.model.Coffee
 
 data class HomeUIState(
     val isLoading: Boolean = false,

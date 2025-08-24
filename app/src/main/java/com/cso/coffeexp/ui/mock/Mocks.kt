@@ -1,6 +1,6 @@
 package com.cso.coffeexp.ui.mock
 
-import com.cso.coffeexp.data.Coffee
+import com.cso.coffeexp.domain.model.Coffee
 
 val mockCoffeeData = listOf(
     Coffee(

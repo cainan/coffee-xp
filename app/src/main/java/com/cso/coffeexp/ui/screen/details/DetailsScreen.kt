@@ -38,7 +38,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.cso.coffeexp.data.Coffee
+import com.cso.coffeexp.domain.model.Coffee
 import com.cso.coffeexp.ui.theme.CoffeeXpTheme
 
 @OptIn(ExperimentalMaterial3Api::class)

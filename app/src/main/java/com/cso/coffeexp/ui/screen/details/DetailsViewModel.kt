@@ -2,7 +2,7 @@ package com.cso.coffeexp.ui.screen.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cso.coffeexp.data.Coffee
+import com.cso.coffeexp.domain.model.Coffee
 import com.cso.coffeexp.ui.mock.mockCoffeeData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
