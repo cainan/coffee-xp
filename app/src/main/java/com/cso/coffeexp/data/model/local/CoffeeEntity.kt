@@ -5,10 +5,10 @@ import androidx.room.PrimaryKey
 import java.util.UUID
 
 
-@Entity()
+@Entity(tableName = "coffee")
 data class CoffeeEntity(
-    @PrimaryKey
-    val idDb: String = "",
+    @PrimaryKey(autoGenerate = true)
+    val idDb: Long = 0L,
     val id: String = UUID.randomUUID().toString(), // Unique ID
     val name: String = "",
     val method: String = "",

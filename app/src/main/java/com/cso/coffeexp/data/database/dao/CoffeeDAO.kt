@@ -12,7 +12,7 @@ interface CoffeeDAO {
     @Insert(onConflict = REPLACE)
     suspend fun insert(coffee: CoffeeEntity)
 
-    @Query("SELECT * FROM CoffeeEntity")
+    @Query("SELECT * FROM coffee")
     fun getAll(): List<CoffeeEntity>
 
 }
