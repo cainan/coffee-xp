@@ -167,8 +167,9 @@ fun DetailsScreen(
             // --- Save Button ---
             Button(
                 onClick = {
-                    TODO("Save coffee")
+                    onEvent(DetailsEvent.SaveCoffee)
                 },
+                enabled = coffeeName.isNotBlank() && coffeeMethod.isNotBlank() && coffeeGrade.isNotBlank(),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)

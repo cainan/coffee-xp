@@ -5,10 +5,10 @@ import java.util.UUID
 
 @Serializable
 data class Coffee(
-    val id: String = UUID.randomUUID().toString(), // Unique ID
-    val name: String = "",
-    val method: String = "",
-    val grade: Float = 10f, // Assuming a numerical grade
-    val imageUrl: String? = null, // Optional image URL
-    val notes: String? = null, // Optional tasting notes
+    var id: String = UUID.randomUUID().toString(), // Unique ID
+    var name: String = "",
+    var method: String = "",
+    var grade: Float = 10f, // Assuming a numerical grade
+    var imageUrl: String? = null, // Optional image URL
+    var notes: String? = null, // Optional tasting notes
 )

@@ -30,7 +30,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     uiState: HomeUIState,
     onEvent: (HomeEvent) -> Unit = {},
-    onNavigateToDetails: (String) -> Unit = {},
+    onNavigateToDetails: (String?) -> Unit = {},
 ) {
     LaunchedEffect(Unit) {
         onEvent(HomeEvent.OnInit)
@@ -42,7 +42,7 @@ fun HomeScreen(
         modifier = modifier.fillMaxSize(),
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                TODO()
+                onNavigateToDetails(null)
             }) {
                 Icon(Icons.Filled.Add, contentDescription = "Add new coffee")
             }
