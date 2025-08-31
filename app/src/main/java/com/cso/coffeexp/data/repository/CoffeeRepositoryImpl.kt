@@ -2,6 +2,7 @@ package com.cso.coffeexp.data.repository
 
 import android.util.Log
 import com.cso.coffeexp.data.datasource.local.CoffeeLocalDataSource
+import com.cso.coffeexp.data.mapper.toCoffee
 import com.cso.coffeexp.data.mapper.toCoffeeEntity
 import com.cso.coffeexp.domain.model.Coffee
 import com.cso.coffeexp.domain.repository.CoffeeRepository
@@ -13,10 +14,11 @@ class CoffeeRepositoryImpl(
 ) : CoffeeRepository {
 
     override suspend fun getAllCoffees(): List<Coffee> {
-        TODO("Not yet implemented")
+        Log.d(TAG, "Getting all coffees")
+        return localDataSource.getAllCoffees().map { it.toCoffee() }
     }
 
-    override suspend fun getCoffeeById(id: String): Coffee {
+    override suspend fun getCoffeeById(id: String): Coffee? {
         TODO("Not yet implemented")
     }
 
