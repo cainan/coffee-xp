@@ -6,6 +6,7 @@ import com.cso.coffeexp.data.datasource.local.CoffeeLocalDataSource
 import com.cso.coffeexp.data.datasource.local.impl.CoffeeLocalDataSourceImpl
 import com.cso.coffeexp.data.repository.CoffeeRepositoryImpl
 import com.cso.coffeexp.domain.repository.CoffeeRepository
+import com.cso.coffeexp.domain.usecase.GetAllCoffeesUseCase
 import com.cso.coffeexp.domain.usecase.InsertCoffeeUseCase
 import com.cso.coffeexp.ui.screen.details.DetailsViewModel
 import com.cso.coffeexp.ui.screen.home.HomeViewModel
@@ -24,6 +25,7 @@ object AppModules {
 
     val domainModule = module {
         factory { InsertCoffeeUseCase(get()) }
+        factory { GetAllCoffeesUseCase(get()) }
     }
 
     val dataModule = module {

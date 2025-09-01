@@ -65,7 +65,8 @@ fun HomeScreen(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                items(coffeeList, key = { it.id }) { coffee ->
+//                items(coffeeList, key = { it.id }) { coffee ->
+                items(coffeeList) { coffee ->
                     CoffeeCard(coffee = coffee, onClick = { coffee ->
                         onNavigateToDetails(coffee.id)
                     })

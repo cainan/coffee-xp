@@ -6,6 +6,8 @@ import com.cso.coffeexp.data.mapper.toCoffee
 import com.cso.coffeexp.data.mapper.toCoffeeEntity
 import com.cso.coffeexp.domain.model.Coffee
 import com.cso.coffeexp.domain.repository.CoffeeRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 private const val TAG = "CoffeeRepositoryImpl"
 
@@ -13,9 +15,9 @@ class CoffeeRepositoryImpl(
     val localDataSource: CoffeeLocalDataSource,
 ) : CoffeeRepository {
 
-    override suspend fun getAllCoffees(): List<Coffee> {
+    override suspend fun getAllCoffees(): List<Coffee> = withContext(Dispatchers.IO) {
         Log.d(TAG, "Getting all coffees")
-        return localDataSource.getAllCoffees().map { it.toCoffee() }
+        return@withContext localDataSource.getAllCoffees().map { it.toCoffee() }
     }
 
     override suspend fun getCoffeeById(id: String): Coffee? {
