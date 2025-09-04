@@ -20,7 +20,7 @@ class DetailsViewModel(
     fun onEvent(event: DetailsEvent) {
         when (event) {
             is DetailsEvent.FindCoffeeById -> findCoffeeById(event.coffeeId)
-            is DetailsEvent.SaveCoffee -> saveCoffee(event.onBackPressed)
+            is DetailsEvent.SaveCoffee -> saveCoffee(event.onSuccess)
 
             // handle textFields
             is DetailsEvent.OnCoffeeNameChanged -> onCoffeeNameChanged(event.newName)
@@ -31,7 +31,7 @@ class DetailsViewModel(
     }
 
 
-    private fun saveCoffee(onBackPressed: () -> Unit) {
+    private fun saveCoffee(onSuccess: () -> Unit) {
         viewModelScope.launch {
             _uiState.update {
                 it.copy(isLoading = true)
@@ -42,7 +42,7 @@ class DetailsViewModel(
                 it.copy(isLoading = false)
             }
 
-            onBackPressed()
+            onSuccess()
         }
     }
 
