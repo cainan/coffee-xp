@@ -57,10 +57,10 @@ fun DetailsScreen(
         }
     }
 
-    var coffeeName = uiState.coffee.name
-    var coffeeMethod = uiState.coffee.method
-    var coffeeGrade = uiState.coffee.grade.toString()
-    var coffeeNotes = uiState.coffee.notes
+    val coffeeName = uiState.coffee.name
+    val coffeeMethod = uiState.coffee.method
+    val coffeeGrade = uiState.coffee.grade.toString()
+    val coffeeNotes = uiState.coffee.notes
     var selectedImageUri = uiState.coffee.imageUrl
 
     val context = LocalContext.current
@@ -117,7 +117,7 @@ fun DetailsScreen(
             // --- Coffee Name ---
             OutlinedTextField(
                 value = coffeeName,
-                onValueChange = { coffeeName = it },
+                onValueChange = { onEvent(DetailsEvent.OnCoffeeNameChanged(it)) },
                 label = { Text("Coffee Name *") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
@@ -129,7 +129,7 @@ fun DetailsScreen(
             // --- Coffee Method ---
             OutlinedTextField(
                 value = coffeeMethod,
-                onValueChange = { coffeeMethod = it },
+                onValueChange = { onEvent(DetailsEvent.OnCoffeeMethodChanged(it)) },
                 label = { Text("Brewing Method *") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
@@ -141,7 +141,7 @@ fun DetailsScreen(
             // --- Coffee Grade ---
             OutlinedTextField(
                 value = coffeeGrade,
-                onValueChange = { coffeeGrade = it },
+                onValueChange = { onEvent(DetailsEvent.OnCoffeeGradeChanged(it)) },
                 label = { Text("Grade (e.g., 4.5) *") },
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(
@@ -156,7 +156,7 @@ fun DetailsScreen(
             // --- Tasting Notes (Optional) ---
             OutlinedTextField(
                 value = coffeeNotes ?: "",
-                onValueChange = { coffeeNotes = it },
+                onValueChange = { onEvent(DetailsEvent.OnCoffeeNotesChanged(it)) },
                 label = { Text("Tasting Notes (Optional)") },
                 modifier = Modifier.fillMaxWidth(),
                 minLines = 3
@@ -167,7 +167,7 @@ fun DetailsScreen(
             // --- Save Button ---
             Button(
                 onClick = {
-                    onEvent(DetailsEvent.SaveCoffee)
+                    onEvent(DetailsEvent.SaveCoffee(onBackPressed))
                 },
                 enabled = coffeeName.isNotBlank() && coffeeMethod.isNotBlank() && coffeeGrade.isNotBlank(),
                 modifier = Modifier

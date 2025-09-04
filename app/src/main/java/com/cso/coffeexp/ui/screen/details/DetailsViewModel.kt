@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(
-    private val insertCoffeeUseCase: InsertCoffeeUseCase
+    private val insertCoffeeUseCase: InsertCoffeeUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DetailsUIState(isLoading = false, coffee = Coffee()))
@@ -20,18 +20,29 @@ class DetailsViewModel(
     fun onEvent(event: DetailsEvent) {
         when (event) {
             is DetailsEvent.FindCoffeeById -> findCoffeeById(event.coffeeId)
-            DetailsEvent.SaveCoffee -> saveCoffee()
+            is DetailsEvent.SaveCoffee -> saveCoffee(event.onBackPressed)
+
+            // handle textFields
+            is DetailsEvent.OnCoffeeNameChanged -> onCoffeeNameChanged(event.newName)
+            is DetailsEvent.OnCoffeeGradeChanged -> onCoffeeGradeChanged(event.newGrade)
+            is DetailsEvent.OnCoffeeMethodChanged -> onCoffeeMethodChanged(event.newMethod)
+            is DetailsEvent.OnCoffeeNotesChanged -> onCoffeeNotesChanged(event.newNotes)
         }
     }
 
-    private fun saveCoffee() {
+
+    private fun saveCoffee(onBackPressed: () -> Unit) {
         viewModelScope.launch {
             _uiState.update {
                 it.copy(isLoading = true)
             }
 
             insertCoffeeUseCase.invoke(_uiState.value.coffee)
+            _uiState.update {
+                it.copy(isLoading = false)
+            }
 
+            onBackPressed()
         }
     }
 
@@ -49,5 +60,31 @@ class DetailsViewModel(
         }
     }
 
+
+    // Handle TextView
+
+    private fun onCoffeeNameChanged(newName: String) {
+        _uiState.update {
+            it.copy(coffee = it.coffee.copy(name = newName))
+        }
+    }
+
+    private fun onCoffeeGradeChanged(newGrade: String) {
+        _uiState.update {
+            it.copy(coffee = it.coffee.copy(grade = newGrade.toFloat()))
+        }
+    }
+
+    private fun onCoffeeMethodChanged(newMethod: String) {
+        _uiState.update {
+            it.copy(coffee = it.coffee.copy(method = newMethod))
+        }
+    }
+
+    private fun onCoffeeNotesChanged(newNotes: String) {
+        _uiState.update {
+            it.copy(coffee = it.coffee.copy(notes = newNotes))
+        }
+    }
 
 }
