@@ -70,8 +70,11 @@ class DetailsViewModel(
     }
 
     private fun onCoffeeGradeChanged(newGrade: String) {
-        _uiState.update {
-            it.copy(coffee = it.coffee.copy(grade = newGrade.toFloat()))
+        runCatching {
+            newGrade.toFloat()
+            _uiState.update {
+                it.copy(coffee = it.coffee.copy(grade = newGrade.toFloat()))
+            }
         }
     }
 
