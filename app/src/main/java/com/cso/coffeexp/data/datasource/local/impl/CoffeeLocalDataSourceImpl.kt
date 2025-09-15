@@ -9,11 +9,13 @@ class CoffeeLocalDataSourceImpl(
     val coffeeDao: CoffeeDAO,
 ) : CoffeeLocalDataSource {
 
-    override suspend fun insertCoffee(coffeeEntity: CoffeeEntity) = coffeeDao.insert(coffeeEntity)
+    override suspend fun insertCoffee(coffeeEntity: CoffeeEntity) =
+        coffeeDao.insert(coffeeEntity)
 
-    override suspend fun getAllCoffees(): List<CoffeeEntity> = coffeeDao.getAll()
+    override suspend fun getAllCoffees(): List<CoffeeEntity> =
+        coffeeDao.getAll()
 
-    override suspend fun getCoffeeById(id: Int): CoffeeEntity? {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getCoffeeById(id: Long): CoffeeEntity? =
+        coffeeDao.getCoffeeById(id)
+
 }

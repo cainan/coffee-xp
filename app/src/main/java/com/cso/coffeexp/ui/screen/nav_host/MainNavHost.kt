@@ -43,7 +43,7 @@ fun MainNavHost(modifier: Modifier = Modifier) {
         }
 
         composable<UIRoute.Details> { navBackStackEntry ->
-            val coffeeId = navBackStackEntry.arguments?.getString(UIArgument.COFFEE_ID.key)
+            val coffeeId = navBackStackEntry.arguments?.getLong(UIArgument.COFFEE_ID.key)
 
             DetailsScreen(
                 modifier = Modifier,

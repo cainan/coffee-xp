@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cso.coffeexp.R
 import com.cso.coffeexp.domain.model.Coffee
+import com.cso.coffeexp.ui.mock.mockCoffeeData
 
 @Composable
 fun CoffeeCard(
@@ -85,13 +86,7 @@ fun CoffeeCard(
 fun CoffeeCardPreview() {
     MaterialTheme {
         CoffeeCard(
-            coffee = Coffee(
-                id = "1",
-                name = "Ethiopian Yirgacheffe",
-                method = "Pour Over",
-                grade = 4.5f,
-                imageUrl = "https://example.com/image.jpg" // Replace with a valid image URL or keep null
-            ),
+            coffee = mockCoffeeData.first(),
             modifier = Modifier.padding(16.dp)
         )
     }

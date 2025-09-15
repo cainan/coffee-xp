@@ -30,7 +30,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     uiState: HomeUIState,
     onEvent: (HomeEvent) -> Unit = {},
-    onNavigateToDetails: (String?) -> Unit = {},
+    onNavigateToDetails: (Long?) -> Unit = {},
 ) {
     LaunchedEffect(Unit) {
         onEvent(HomeEvent.OnInit)

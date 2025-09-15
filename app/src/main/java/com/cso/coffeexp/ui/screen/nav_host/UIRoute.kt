@@ -9,6 +9,6 @@ sealed interface UIRoute {
     data object Home : UIRoute
 
     @Serializable
-    data class Details(val coffeeId: String?) : UIRoute
+    data class Details(val coffeeId: Long?) : UIRoute
 
 }

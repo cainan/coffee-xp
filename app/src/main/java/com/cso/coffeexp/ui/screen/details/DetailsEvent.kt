@@ -1,7 +1,7 @@
 package com.cso.coffeexp.ui.screen.details
 
 sealed interface DetailsEvent {
-    data class FindCoffeeById(val coffeeId: String) : DetailsEvent
+    data class FindCoffeeById(val coffeeId: Long) : DetailsEvent
     data class SaveCoffee(val onSuccess: () -> Unit) : DetailsEvent
 
     // Handling textViews

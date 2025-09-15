@@ -46,7 +46,7 @@ import com.cso.coffeexp.ui.theme.CoffeeXpTheme
 fun DetailsScreen(
     modifier: Modifier = Modifier,
     uiState: DetailsUIState,
-    coffeeId: String? = null,
+    coffeeId: Long? = null,
     onEvent: (DetailsEvent) -> Unit = {},
     onBackPressed: () -> Unit = {},
 ) {

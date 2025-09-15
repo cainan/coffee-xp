@@ -3,8 +3,8 @@ package com.cso.coffeexp.ui.screen.details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cso.coffeexp.domain.model.Coffee
+import com.cso.coffeexp.domain.repository.CoffeeRepository
 import com.cso.coffeexp.domain.usecase.InsertCoffeeUseCase
-import com.cso.coffeexp.ui.mock.mockCoffeeData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 
 class DetailsViewModel(
     private val insertCoffeeUseCase: InsertCoffeeUseCase,
+    private val coffeeRepository: CoffeeRepository,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DetailsUIState(isLoading = false, coffee = Coffee()))
@@ -46,7 +47,7 @@ class DetailsViewModel(
         }
     }
 
-    private fun findCoffeeById(id: String) {
+    private fun findCoffeeById(id: Long) {
         viewModelScope.launch {
             _uiState.update {
                 it.copy(isLoading = true)
@@ -55,7 +56,8 @@ class DetailsViewModel(
             _uiState.update {
                 it.copy(
                     isLoading = false,
-                    coffee = mockCoffeeData.firstOrNull { coffee -> coffee.id == id } ?: Coffee())
+                    coffee = coffeeRepository.getCoffeeById(id) ?: Coffee()
+                )
             }
         }
     }

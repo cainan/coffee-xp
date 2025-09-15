@@ -15,4 +15,6 @@ interface CoffeeDAO {
     @Query("SELECT * FROM coffee")
     fun getAll(): List<CoffeeEntity>
 
+    @Query("SELECT * FROM coffee WHERE id = :id")
+    fun getCoffeeById(id: Long): CoffeeEntity?
 }

@@ -4,18 +4,21 @@ import com.cso.coffeexp.domain.model.Coffee
 
 val mockCoffeeData = listOf(
     Coffee(
+        id = 1,
         name = "Ethiopian Yirgacheffe",
         method = "Chemex",
         grade = 4.8f,
         imageUrl = "https://picsum.photos/seed/yirgacheffe/400/300"
     ),
     Coffee(
+        id = 2,
         name = "Colombian Supremo",
         method = "French Press",
         grade = 4.5f,
         imageUrl = "https://picsum.photos/seed/supremo/400/300"
     ),
     Coffee(
+        id = 3,
         name = "Brazilian Santos",
         method = "Espresso",
         grade = 4.2f

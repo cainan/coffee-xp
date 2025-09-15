@@ -20,8 +20,9 @@ class CoffeeRepositoryImpl(
         return@withContext localDataSource.getAllCoffees().map { it.toCoffee() }
     }
 
-    override suspend fun getCoffeeById(id: String): Coffee? {
-        TODO("Not yet implemented")
+    override suspend fun getCoffeeById(id: Long): Coffee? = withContext(Dispatchers.IO) {
+        Log.d(TAG, "Getting coffee with id $id")
+        localDataSource.getCoffeeById(id)?.toCoffee()
     }
 
     override suspend fun insertCoffee(coffee: Coffee): Boolean {
