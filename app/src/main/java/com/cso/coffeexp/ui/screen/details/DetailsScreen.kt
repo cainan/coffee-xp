@@ -1,5 +1,6 @@
 package com.cso.coffeexp.ui.screen.details
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -41,6 +42,8 @@ import androidx.compose.ui.unit.dp
 import com.cso.coffeexp.domain.model.Coffee
 import com.cso.coffeexp.ui.theme.CoffeeXpTheme
 
+private const val TAG = "DetailsViewModel"
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailsScreen(
@@ -51,7 +54,8 @@ fun DetailsScreen(
     onBackPressed: () -> Unit = {},
 ) {
 
-    coffeeId?.let {
+    if (coffeeId != null && coffeeId != 0L) {
+        Log.d(TAG, "Need to search for the coffee. CoffeeId: $coffeeId")
         LaunchedEffect(Unit) {
             onEvent(DetailsEvent.FindCoffeeById(coffeeId))
         }
@@ -164,16 +168,35 @@ fun DetailsScreen(
 
             Spacer(modifier = Modifier.weight(1f)) // Push button to the bottom
 
-            // --- Save Button ---
-            Button(
-                onClick = {
-                    onEvent(DetailsEvent.SaveCoffee(onBackPressed))
-                },
-                enabled = coffeeName.isNotBlank() && coffeeMethod.isNotBlank() && coffeeGrade.isNotBlank(),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
-            ) { Text("Save Coffee") }
+            // --- Update Button ---
+            if (coffeeId != null && coffeeId != 0L) {
+                Button(
+                    onClick = {
+                        onEvent(DetailsEvent.UpdateCoffee(onBackPressed))
+                    },
+                    enabled = coffeeName.isNotBlank() && coffeeMethod.isNotBlank() && coffeeGrade.isNotBlank(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp)
+                ) {
+                    Text("Update Coffee")
+                }
+
+                // --- Save Button ---
+            } else {
+                Button(
+                    onClick = {
+                        onEvent(DetailsEvent.SaveCoffee(onBackPressed))
+                    },
+                    enabled = coffeeName.isNotBlank() && coffeeMethod.isNotBlank() && coffeeGrade.isNotBlank(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp)
+                ) {
+                    Text("Save Coffee")
+                }
+            }
+
         }
     }
 }

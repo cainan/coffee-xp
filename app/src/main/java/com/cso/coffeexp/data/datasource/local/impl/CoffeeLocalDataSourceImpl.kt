@@ -1,5 +1,6 @@
 package com.cso.coffeexp.data.datasource.local.impl
 
+import android.util.Log
 import com.cso.coffeexp.data.database.dao.CoffeeDAO
 import com.cso.coffeexp.data.datasource.local.CoffeeLocalDataSource
 import com.cso.coffeexp.data.model.local.CoffeeEntity
@@ -17,5 +18,11 @@ class CoffeeLocalDataSourceImpl(
 
     override suspend fun getCoffeeById(id: Long): CoffeeEntity? =
         coffeeDao.getCoffeeById(id)
+
+    override suspend fun updateCoffee(coffeeEntity: CoffeeEntity): Boolean {
+        val success = coffeeDao.updateCoffee(coffeeEntity)
+        Log.d("CoffeeLocalDataSource", "Updated coffee: $success")
+        return success > 0
+    }
 
 }

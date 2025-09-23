@@ -1,5 +1,6 @@
 package com.cso.coffeexp.ui.screen.details
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cso.coffeexp.domain.model.Coffee
@@ -9,6 +10,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
+private const val TAG = "DetailsViewModel"
 
 class DetailsViewModel(
     private val insertCoffeeUseCase: InsertCoffeeUseCase,
@@ -22,12 +25,30 @@ class DetailsViewModel(
         when (event) {
             is DetailsEvent.FindCoffeeById -> findCoffeeById(event.coffeeId)
             is DetailsEvent.SaveCoffee -> saveCoffee(event.onSuccess)
+            is DetailsEvent.UpdateCoffee -> updateCoffee(event.onSuccess)
 
             // handle textFields
             is DetailsEvent.OnCoffeeNameChanged -> onCoffeeNameChanged(event.newName)
             is DetailsEvent.OnCoffeeGradeChanged -> onCoffeeGradeChanged(event.newGrade)
             is DetailsEvent.OnCoffeeMethodChanged -> onCoffeeMethodChanged(event.newMethod)
             is DetailsEvent.OnCoffeeNotesChanged -> onCoffeeNotesChanged(event.newNotes)
+        }
+    }
+
+    private fun updateCoffee(onSuccess: () -> Unit) {
+
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(isLoading = true)
+            }
+
+            val updateCoffee = coffeeRepository.updateCoffee(_uiState.value.coffee)
+            Log.d(TAG, "updateCoffee: $updateCoffee")
+
+            onSuccess()
+
+            // Clear state
+            clearUiState()
         }
     }
 
@@ -39,11 +60,11 @@ class DetailsViewModel(
             }
 
             insertCoffeeUseCase.invoke(_uiState.value.coffee)
-            _uiState.update {
-                it.copy(isLoading = false)
-            }
 
             onSuccess()
+
+            // Clear state
+            clearUiState()
         }
     }
 
@@ -62,6 +83,14 @@ class DetailsViewModel(
         }
     }
 
+    fun clearUiState() {
+        _uiState.update {
+            it.copy(
+                isLoading = false,
+                coffee = Coffee()
+            )
+        }
+    }
 
     // Handle TextView
 

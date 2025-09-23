@@ -36,7 +36,7 @@ fun MainNavHost(modifier: Modifier = Modifier) {
                 uiState = homeUIState,
                 onEvent = homeViewModel::onEvent,
                 onNavigateToDetails = { coffeeId ->
-                    Log.d(TAG, "HomeScreen - CoffeeId: $coffeeId")
+                    Log.d(TAG, "Navigate from HomeScreen to DetailsScreen - CoffeeId: $coffeeId")
                     navController.navigate(UIRoute.Details(coffeeId))
                 }
             )
@@ -44,7 +44,7 @@ fun MainNavHost(modifier: Modifier = Modifier) {
 
         composable<UIRoute.Details> { navBackStackEntry ->
             val coffeeId = navBackStackEntry.arguments?.getLong(UIArgument.COFFEE_ID.key)
-
+            Log.d(TAG, "Open DetailsScreen - CoffeeId: $coffeeId")
             DetailsScreen(
                 modifier = Modifier,
                 uiState = detailsUIState,
