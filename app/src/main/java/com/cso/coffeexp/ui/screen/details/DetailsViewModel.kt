@@ -27,13 +27,19 @@ class DetailsViewModel(
             is DetailsEvent.SaveCoffee -> saveCoffee(event.onSuccess)
             is DetailsEvent.UpdateCoffee -> updateCoffee(event.onSuccess)
             is DetailsEvent.OnShowBottomSheet -> onShowBottomSheet(event.show)
-
+            is DetailsEvent.OnImageSelectedFromGallery -> onImageSelectedFromGallery(event.imageUri)
 
             // handle textFields
             is DetailsEvent.OnCoffeeNameChanged -> onCoffeeNameChanged(event.newName)
             is DetailsEvent.OnCoffeeGradeChanged -> onCoffeeGradeChanged(event.newGrade)
             is DetailsEvent.OnCoffeeMethodChanged -> onCoffeeMethodChanged(event.newMethod)
             is DetailsEvent.OnCoffeeNotesChanged -> onCoffeeNotesChanged(event.newNotes)
+        }
+    }
+
+    private fun onImageSelectedFromGallery(imageUri: String) {
+        _uiState.update {
+            it.copy(coffee = it.coffee.copy(imageUrl = imageUri))
         }
     }
 

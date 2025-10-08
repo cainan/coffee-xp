@@ -6,7 +6,7 @@ sealed interface DetailsEvent {
     data class UpdateCoffee(val onSuccess: () -> Unit) : DetailsEvent
 
     data class OnShowBottomSheet(val show: Boolean) : DetailsEvent
-
+    data class OnImageSelectedFromGallery(val imageUri: String) : DetailsEvent
 
     // Handling textViews
     data class OnCoffeeNameChanged(val newName: String) : DetailsEvent

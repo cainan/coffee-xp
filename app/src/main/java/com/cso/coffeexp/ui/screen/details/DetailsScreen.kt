@@ -2,6 +2,9 @@ package com.cso.coffeexp.ui.screen.details
 
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -34,6 +37,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -56,6 +60,13 @@ fun DetailsScreen(
     onBackPressed: () -> Unit = {},
 ) {
 
+    val pickMediaLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri ->
+            onEvent(DetailsEvent.OnImageSelectedFromGallery(uri.toString()))
+        }
+    )
+
     if (coffeeId != null && coffeeId != 0L) {
         Log.d(TAG, "Need to search for the coffee. CoffeeId: $coffeeId")
         LaunchedEffect(Unit) {
@@ -67,7 +78,7 @@ fun DetailsScreen(
     val coffeeMethod = uiState.coffee.method
     val coffeeGrade = uiState.coffee.grade.toString()
     val coffeeNotes = uiState.coffee.notes
-    var selectedImageUri = uiState.coffee.imageUrl
+    val selectedImageUri = uiState.coffee.imageUrl
 
     val context = LocalContext.current
 
@@ -111,8 +122,9 @@ fun DetailsScreen(
                 contentAlignment = Alignment.Center
             ) {
                 AsyncImage(
-                    model = "https://example.com/image.jpg",
+                    model = selectedImageUri,
                     contentDescription = null,
+                    contentScale = ContentScale.Crop, // Crop and center the image
                     modifier = Modifier.clickable {
                         onEvent(DetailsEvent.OnShowBottomSheet(true))
                     }
@@ -204,9 +216,12 @@ fun DetailsScreen(
                 BottomSheetImageSource(
                     onSelectCamera = {
                         Toast.makeText(context, "Camera", Toast.LENGTH_SHORT).show()
+                        onEvent(DetailsEvent.OnShowBottomSheet(false))
                     },
                     onSelectGallery = {
                         Toast.makeText(context, "Gallery", Toast.LENGTH_SHORT).show()
+                        pickMediaLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                        onEvent(DetailsEvent.OnShowBottomSheet(false))
                     },
                     onBack = { onEvent(DetailsEvent.OnShowBottomSheet(false)) }
                 )
@@ -216,7 +231,6 @@ fun DetailsScreen(
 }
 
 
-// Preview for AddCoffeeScreen
 @Preview(showBackground = true, device = "id:pixel_6")
 @Composable
 fun AddCoffeeScreenPreview() {
