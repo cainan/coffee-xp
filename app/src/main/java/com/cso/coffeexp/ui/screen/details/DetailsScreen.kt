@@ -1,6 +1,7 @@
 package com.cso.coffeexp.ui.screen.details
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -18,7 +19,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -39,7 +39,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.cso.coffeexp.domain.model.Coffee
+import com.cso.coffeexp.ui.components.BottomSheetImageSource
 import com.cso.coffeexp.ui.theme.CoffeeXpTheme
 
 private const val TAG = "DetailsViewModel"
@@ -108,11 +110,12 @@ fun DetailsScreen(
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    imageVector = Icons.Filled.AccountBox,
-                    contentDescription = "Add image",
-                    modifier = Modifier.size(48.dp),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                AsyncImage(
+                    model = "https://example.com/image.jpg",
+                    contentDescription = null,
+                    modifier = Modifier.clickable {
+                        onEvent(DetailsEvent.OnShowBottomSheet(true))
+                    }
                 )
             }
 
@@ -197,9 +200,21 @@ fun DetailsScreen(
                 }
             }
 
+            if (uiState.showBottomSheet) {
+                BottomSheetImageSource(
+                    onSelectCamera = {
+                        Toast.makeText(context, "Camera", Toast.LENGTH_SHORT).show()
+                    },
+                    onSelectGallery = {
+                        Toast.makeText(context, "Gallery", Toast.LENGTH_SHORT).show()
+                    },
+                    onBack = { onEvent(DetailsEvent.OnShowBottomSheet(false)) }
+                )
+            }
         }
     }
 }
+
 
 // Preview for AddCoffeeScreen
 @Preview(showBackground = true, device = "id:pixel_6")

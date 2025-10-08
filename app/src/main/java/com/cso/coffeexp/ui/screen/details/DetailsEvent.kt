@@ -5,6 +5,9 @@ sealed interface DetailsEvent {
     data class SaveCoffee(val onSuccess: () -> Unit) : DetailsEvent
     data class UpdateCoffee(val onSuccess: () -> Unit) : DetailsEvent
 
+    data class OnShowBottomSheet(val show: Boolean) : DetailsEvent
+
+
     // Handling textViews
     data class OnCoffeeNameChanged(val newName: String) : DetailsEvent
     data class OnCoffeeMethodChanged(val newMethod: String) : DetailsEvent

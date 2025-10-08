@@ -26,12 +26,20 @@ class DetailsViewModel(
             is DetailsEvent.FindCoffeeById -> findCoffeeById(event.coffeeId)
             is DetailsEvent.SaveCoffee -> saveCoffee(event.onSuccess)
             is DetailsEvent.UpdateCoffee -> updateCoffee(event.onSuccess)
+            is DetailsEvent.OnShowBottomSheet -> onShowBottomSheet(event.show)
+
 
             // handle textFields
             is DetailsEvent.OnCoffeeNameChanged -> onCoffeeNameChanged(event.newName)
             is DetailsEvent.OnCoffeeGradeChanged -> onCoffeeGradeChanged(event.newGrade)
             is DetailsEvent.OnCoffeeMethodChanged -> onCoffeeMethodChanged(event.newMethod)
             is DetailsEvent.OnCoffeeNotesChanged -> onCoffeeNotesChanged(event.newNotes)
+        }
+    }
+
+    private fun onShowBottomSheet(show: Boolean) {
+        _uiState.update {
+            it.copy(showBottomSheet = show)
         }
     }
 

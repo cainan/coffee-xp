@@ -13,6 +13,7 @@ kotlinxSerializationJson = "1.9.0"
 koinBom = "4.1.0"
 kspVersion = "2.2.10-2.0.2"
 roomVersion = "2.7.2"
+coilVersion = "3.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +39,7 @@ koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
+coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coilVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
