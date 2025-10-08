@@ -45,6 +45,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.cso.coffeexp.domain.model.Coffee
+import com.cso.coffeexp.extensions.persistUriPermission
 import com.cso.coffeexp.ui.components.BottomSheetImageSource
 import com.cso.coffeexp.ui.theme.CoffeeXpTheme
 
@@ -60,10 +61,15 @@ fun DetailsScreen(
     onBackPressed: () -> Unit = {},
 ) {
 
+    val context = LocalContext.current
+
     val pickMediaLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
-            onEvent(DetailsEvent.OnImageSelectedFromGallery(uri.toString()))
+            uri?.let {
+                context.persistUriPermission(uri)
+                onEvent(DetailsEvent.OnImageSelectedFromGallery(uri.toString()))
+            }
         }
     )
 
@@ -79,8 +85,6 @@ fun DetailsScreen(
     val coffeeGrade = uiState.coffee.grade.toString()
     val coffeeNotes = uiState.coffee.notes
     val selectedImageUri = uiState.coffee.imageUrl
-
-    val context = LocalContext.current
 
     Scaffold(
         modifier = modifier,

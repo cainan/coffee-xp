@@ -1,6 +1,5 @@
 package com.cso.coffeexp.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -23,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.cso.coffeexp.R
 import com.cso.coffeexp.domain.model.Coffee
 import com.cso.coffeexp.ui.mock.mockCoffeeData
@@ -47,8 +47,9 @@ fun CoffeeCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Static Coffee Image
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background), // Replace with your static image resource
+            AsyncImage(
+                model = coffee.imageUrl,
+                placeholder = painterResource(id = R.drawable.ic_launcher_background), // Replace with your static image resource
                 contentDescription = coffee.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
