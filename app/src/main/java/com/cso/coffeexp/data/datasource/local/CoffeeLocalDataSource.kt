@@ -7,4 +7,5 @@ interface CoffeeLocalDataSource {
     suspend fun getAllCoffees(): List<CoffeeEntity>
     suspend fun getCoffeeById(id: Long): CoffeeEntity?
     suspend fun updateCoffee(coffeeEntity: CoffeeEntity): Boolean
+    suspend fun removeCoffee(id: Long): Boolean
 }

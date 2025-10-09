@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.cso.coffeexp.ui.components.SwipeToDeleteCard
+import com.cso.coffeexp.ui.components.SwipeToDeleteCoffee
 import com.cso.coffeexp.ui.mock.mockCoffeeData
 import com.cso.coffeexp.ui.theme.CoffeeXpTheme
 
@@ -68,14 +68,14 @@ fun HomeScreen(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                items(items = coffeeList) { coffee ->
-                    SwipeToDeleteCard(
+                items(items = coffeeList, key = { it.id ?: 0 }) { coffee ->
+                    SwipeToDeleteCoffee(
                         coffee = coffee,
                         onToggleDone = {
                             Toast.makeText(context, "onToggleDone", Toast.LENGTH_SHORT).show()
                         },
                         onRemove = {
-                            Toast.makeText(context, "onRemove", Toast.LENGTH_SHORT).show()
+                            onEvent(HomeEvent.OnRemoveCoffee(it))
                         },
                         onClick = { coffee ->
                             onNavigateToDetails(coffee.id)

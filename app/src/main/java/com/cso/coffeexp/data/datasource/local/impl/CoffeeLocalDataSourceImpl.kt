@@ -25,4 +25,10 @@ class CoffeeLocalDataSourceImpl(
         return success > 0
     }
 
+    override suspend fun removeCoffee(id: Long): Boolean {
+        val success = coffeeDao.removeCoffee(id)
+        Log.d("CoffeeLocalDataSource", "Removed coffee: $success")
+        return success > 0
+    }
+
 }

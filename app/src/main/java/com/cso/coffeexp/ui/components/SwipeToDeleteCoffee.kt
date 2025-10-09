@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.cso.coffeexp.domain.model.Coffee
 
 @Composable
-fun SwipeToDeleteCard(
+fun SwipeToDeleteCoffee(
     coffee: Coffee,
     onToggleDone: (Coffee) -> Unit,
     onRemove: (Coffee) -> Unit,
@@ -36,6 +36,8 @@ fun SwipeToDeleteCard(
 
     SwipeToDismissBox(
         state = swipeToDismissBoxState,
+        enableDismissFromStartToEnd = false,
+        enableDismissFromEndToStart = true,
         modifier = modifier.fillMaxSize(),
         backgroundContent = {
             when (swipeToDismissBoxState.dismissDirection) {

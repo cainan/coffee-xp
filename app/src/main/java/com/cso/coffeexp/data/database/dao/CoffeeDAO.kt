@@ -22,4 +22,8 @@ interface CoffeeDAO {
 
     @Update(onConflict = ABORT)
     fun updateCoffee(coffee: CoffeeEntity): Int
+
+    @Query("DELETE FROM coffee WHERE id = :id")
+    fun removeCoffee(id: Long): Int
+
 }

@@ -35,4 +35,10 @@ class CoffeeRepositoryImpl(
         Log.d(TAG, "Updating coffee: $coffee")
         localDataSource.updateCoffee(coffee.toCoffeeEntity())
     }
+
+    override suspend fun removeCoffee(id: Long): Boolean = withContext(Dispatchers.IO) {
+        Log.d(TAG, "Removing coffee: $id")
+        localDataSource.removeCoffee(id)
+    }
+
 }

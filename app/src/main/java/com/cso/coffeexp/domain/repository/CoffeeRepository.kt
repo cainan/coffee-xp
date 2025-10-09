@@ -7,4 +7,5 @@ interface CoffeeRepository {
     suspend fun getCoffeeById(id: Long): Coffee?
     suspend fun insertCoffee(coffee: Coffee): Boolean
     suspend fun updateCoffee(coffee: Coffee): Boolean
+    suspend fun removeCoffee(id: Long): Boolean
 }
