@@ -33,15 +33,9 @@ class HomeViewModel(
             }
 
             coffee.id?.let {
-                repository.removeCoffee(it)
-            }
-
-            getAllCoffeesUseCase().collect { coffeeList ->
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        coffeeList = coffeeList
-                    )
+                val removeCoffee = repository.removeCoffee(it)
+                if (removeCoffee) {
+                    getAllCoffees()
                 }
             }
         }
@@ -53,13 +47,17 @@ class HomeViewModel(
                 it.copy(isLoading = true)
             }
 
-            getAllCoffeesUseCase().collect { coffeeList ->
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        coffeeList = coffeeList
-                    )
-                }
+            getAllCoffees()
+        }
+    }
+
+    private suspend fun getAllCoffees() {
+        getAllCoffeesUseCase().collect { coffeeList ->
+            _uiState.update {
+                it.copy(
+                    isLoading = false,
+                    coffeeList = coffeeList
+                )
             }
         }
     }
