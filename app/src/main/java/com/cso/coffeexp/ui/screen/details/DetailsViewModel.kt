@@ -61,8 +61,6 @@ class DetailsViewModel(
 
             onSuccess()
 
-            // Clear state
-            clearUiState()
         }
     }
 
@@ -77,21 +75,22 @@ class DetailsViewModel(
 
             onSuccess()
 
-            // Clear state
-            clearUiState()
         }
     }
 
-    private fun findCoffeeById(id: Long) {
+    private fun findCoffeeById(id: Long?) {
         viewModelScope.launch {
             _uiState.update {
                 it.copy(isLoading = true)
             }
 
+            val coffeeToDisplay =
+                id?.let { coffeeRepository.getCoffeeById(id) ?: Coffee() } ?: Coffee()
+
             _uiState.update {
                 it.copy(
                     isLoading = false,
-                    coffee = coffeeRepository.getCoffeeById(id) ?: Coffee()
+                    coffee = coffeeToDisplay
                 )
             }
         }

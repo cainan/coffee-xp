@@ -73,11 +73,8 @@ fun DetailsScreen(
         }
     )
 
-    if (coffeeId != null && coffeeId != 0L) {
-        Log.d(TAG, "Need to search for the coffee. CoffeeId: $coffeeId")
-        LaunchedEffect(Unit) {
-            onEvent(DetailsEvent.FindCoffeeById(coffeeId))
-        }
+    LaunchedEffect(Unit) {
+        onEvent(DetailsEvent.FindCoffeeById(coffeeId))
     }
 
     val coffeeName = uiState.coffee.name
