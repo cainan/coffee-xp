@@ -15,6 +15,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -22,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.cso.coffeexp.R
 import com.cso.coffeexp.ui.components.SwipeToDeleteCoffee
 import com.cso.coffeexp.ui.mock.mockCoffeeData
 import com.cso.coffeexp.ui.theme.CoffeeXpTheme
@@ -43,6 +45,13 @@ fun HomeScreen(
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = context.getString(R.string.app_name))
+                }
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 onNavigateToDetails(null)
