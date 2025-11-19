@@ -38,6 +38,7 @@ fun BottomSheetImageSource(
     ModalBottomSheet(
         sheetState = sheetState,
         containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
+        contentColor = MaterialTheme.colorScheme.onPrimary,
         onDismissRequest = onBack,
     ) {
         Column(
