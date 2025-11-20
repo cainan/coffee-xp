@@ -22,6 +22,28 @@ class HomeViewModel(
         when (event) {
             HomeEvent.OnInit -> getHomeContent()
             is HomeEvent.OnRemoveCoffee -> onRemoveCoffee(event.coffee)
+            is HomeEvent.OnSearch -> onSearchCoffee(event.query)
+        }
+    }
+
+    private fun onSearchCoffee(query: String) {
+        viewModelScope.launch {
+
+            _uiState.update {
+                it.copy(isLoading = true)
+            }
+
+            getAllCoffeesUseCase().collect { it ->
+                val coffeeList = it.filter {
+                    it.name.contains(query, ignoreCase = true)
+                }
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        coffeeList = coffeeList
+                    )
+                }
+            }
         }
     }
 
